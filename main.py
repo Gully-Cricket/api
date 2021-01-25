@@ -8,9 +8,6 @@ from psycopg2.extras import RealDictCursor
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
-# Create some test data for our catalog in the form of a list of dictionaries.
-books = []
-
 
 @app.route('/', methods=['GET'])
 def home():
@@ -18,9 +15,9 @@ def home():
 <p>Gully cricket tournament manager</p>'''
 
 
-# A route to return all of the available entries in our catalog.
+# A route to return all players
 @app.route('/players', methods=['GET'])
-def api_all():
+def player_all():
     conn = None
     players = []
     error = False
@@ -31,7 +28,7 @@ def api_all():
             user=os.environ['user'],
             password=os.environ['password'])
         cur = conn.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT* FROM player")
+        cur.execute("SELECT * FROM player")
         players = cur.fetchall()
 
         cur.close()
@@ -48,28 +45,38 @@ def api_all():
     return jsonify(players)
 
 
-@app.route('/api/v1/resources/books', methods=['GET'])
-def api_id():
-    # Check if an ID was provided as part of the URL.
-    # If ID is provided, assign it to a variable.
-    # If no ID is provided, display an error in the browser.
-    if 'id' in request.args:
-        book_id = int(request.args['id'])
-    else:
-        return "Error: No id field provided. Please specify an id."
+# A route to return a player by id
+@app.route('/players/<player_id>', methods=['GET'])
+def player_one(player_id):
+    conn = None
+    player = None
+    error = False
 
-    # Create an empty list for our results
-    results = []
+    try:
+        conn = psycopg2.connect(
+            host=os.environ['host'],
+            database=os.environ['database'],
+            user=os.environ['user'],
+            password=os.environ['password'])
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT * FROM player WHERE id = (%s)", (player_id,))
+        player = cur.fetchone()
 
-    # Loop through the data and match results that fit the requested ID.
-    # IDs are unique, but other fields might return many results
-    for book in books:
-        if book['id'] == book_id:
-            results.append(book)
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as e:
+        error = True
+        print(e)
+    finally:
+        if conn is not None:
+            conn.close()
 
-    # Use the jsonify function from Flask to convert our list of
-    # Python dictionaries to the JSON format.
-    return jsonify(results)
+    if error:
+        abort(500)
+
+    if player is None:
+        abort(404)
+
+    return jsonify(player)
 
 
 app.run()
