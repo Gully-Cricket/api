@@ -1,6 +1,7 @@
 package com.bopsi.gullycricket.api.player;
 
 import com.bopsi.gullycricket.api.common.Address;
+import com.bopsi.gullycricket.api.common.LeftOrRight;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,6 +28,17 @@ public class Player implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private PlayerRole role;
+
+    @Enumerated(EnumType.STRING)
+    private LeftOrRight battingStyle;
+
+    @Enumerated(EnumType.STRING)
+    private LeftOrRight bowlingStyle;
+
+    @Enumerated(EnumType.STRING)
+    private BowlingType bowlingType;
+
+    private Integer height;
 
     public Long getId() {
         return id;
@@ -61,7 +73,7 @@ public class Player implements Serializable {
     }
 
     public Integer getAge() {
-        if(this.dateOfBirth == null){
+        if (this.dateOfBirth == null) {
             return null;
         }
         LocalDate today = LocalDate.now();
@@ -84,5 +96,37 @@ public class Player implements Serializable {
 
     public void setRole(PlayerRole role) {
         this.role = role;
+    }
+
+    public LeftOrRight getBattingStyle() {
+        return battingStyle;
+    }
+
+    public void setBattingStyle(LeftOrRight battingStyle) {
+        this.battingStyle = battingStyle;
+    }
+
+    public LeftOrRight getBowlingStyle() {
+        return bowlingStyle;
+    }
+
+    public void setBowlingStyle(LeftOrRight bowlingStyle) {
+        this.bowlingStyle = bowlingStyle;
+    }
+
+    public BowlingType getBowlingType() {
+        return bowlingType;
+    }
+
+    public void setBowlingType(BowlingType bowlingType) {
+        this.bowlingType = bowlingType;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 }

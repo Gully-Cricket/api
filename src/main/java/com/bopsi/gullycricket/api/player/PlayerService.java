@@ -6,6 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PlayerService {
 
@@ -18,5 +20,9 @@ public class PlayerService {
 
     public Page<Player> findAllPaginated(int page, int perPage, String sortBy) {
         return playerRepo.findAll(PageRequest.of(page, perPage, Sort.by(sortBy)));
+    }
+
+    public Optional<Player> find(long playerId) {
+        return playerRepo.findById(playerId);
     }
 }
