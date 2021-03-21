@@ -1,7 +1,14 @@
 package com.bopsi.gullycricket.api.player;
 
+import com.bopsi.gullycricket.api.common.Address;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 
 @Entity
 @Table
@@ -13,6 +20,11 @@ public class Player implements Serializable {
     private String firstName;
 
     private String lastName;
+
+    private Date dateOfBirth;
+
+    @OneToOne
+    private Address placeOfBirth;
 
     @Enumerated(EnumType.STRING)
     private PlayerRole role;
@@ -39,6 +51,29 @@ public class Player implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public int getAge() {
+        LocalDate today = LocalDate.now();
+        LocalDate birthday = this.dateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        Period p = Period.between(birthday, today);
+        return p.getYears();
+    }
+
+    public Address getPlaceOfBirth() {
+        return placeOfBirth;
+    }
+
+    public void setPlaceOfBirth(Address placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
     }
 
     public PlayerRole getRole() {
