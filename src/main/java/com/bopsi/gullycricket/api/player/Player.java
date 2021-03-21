@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -61,7 +60,10 @@ public class Player implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getAge() {
+    public Integer getAge() {
+        if(this.dateOfBirth == null){
+            return null;
+        }
         LocalDate today = LocalDate.now();
         LocalDate birthday = this.dateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Period p = Period.between(birthday, today);
