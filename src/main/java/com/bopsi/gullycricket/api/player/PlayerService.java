@@ -10,7 +10,7 @@ public class PlayerService {
     @Autowired
     private PlayerRepo playerRepo;
 
-    public Iterable<Player> getPlayers(){
+    public Iterable<Player> getPlayers() {
         return this.playerRepo.findAll();
     }
 }
