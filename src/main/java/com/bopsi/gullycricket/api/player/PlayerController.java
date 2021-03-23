@@ -18,6 +18,11 @@ public class PlayerController {
         return playerService.findAllPaginated(page, perPage, sortBy);
     }
 
+    @PostMapping("")
+    public Long getPlayers(Player player) {
+        return playerService.save(player);
+    }
+
     @GetMapping("/{playerId}")
     public Optional<Player> getPlayer(@PathVariable("playerId") long playerId) {
         return playerService.find(playerId);

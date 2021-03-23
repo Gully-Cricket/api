@@ -22,6 +22,11 @@ public class PlayerService {
         return playerRepo.findAll(PageRequest.of(page, perPage, Sort.by(sortBy)));
     }
 
+    public Long save(Player player){
+        Player newPlayer = playerRepo.save(player);
+        return newPlayer.getId();
+    }
+
     public Optional<Player> find(long playerId) {
         return playerRepo.findById(playerId);
     }

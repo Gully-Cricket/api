@@ -4,6 +4,7 @@ import com.bopsi.gullycricket.api.common.Address;
 import com.bopsi.gullycricket.api.common.LeftOrRight;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -17,10 +18,13 @@ public class Player implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "First name is mandatory")
     private String firstName;
 
+    @NotBlank(message = "Last name is mandatory")
     private String lastName;
 
+    @NotBlank(message = "Date of birth name is mandatory")
     private Date dateOfBirth;
 
     @OneToOne
