@@ -5,6 +5,7 @@ import com.bopsi.gullycricket.api.common.LeftOrRight;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -24,12 +25,13 @@ public class Player implements Serializable {
     @NotBlank(message = "Last name is mandatory")
     private String lastName;
 
-    @NotBlank(message = "Date of birth name is mandatory")
+    @NotNull(message = "Date of birth name is mandatory")
     private Date dateOfBirth;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address placeOfBirth;
 
+    @NotNull(message = "Role is mandatory")
     @Enumerated(EnumType.STRING)
     private PlayerRole role;
 

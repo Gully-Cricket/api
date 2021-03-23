@@ -19,7 +19,7 @@ public class PlayerController {
     }
 
     @PostMapping("")
-    public Long getPlayers(Player player) {
+    public Long getPlayers(@RequestBody Player player) {
         return playerService.save(player);
     }
 
