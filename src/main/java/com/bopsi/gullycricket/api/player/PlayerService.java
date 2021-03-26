@@ -14,10 +14,6 @@ public class PlayerService {
     @Autowired
     private PlayerRepo playerRepo;
 
-    public Iterable<Player> getPlayers() {
-        return playerRepo.findAll();
-    }
-
     public Page<Player> findAllPaginated(int page, int perPage, String sortBy) {
         return playerRepo.findAll(PageRequest.of(page, perPage, Sort.by(sortBy)));
     }
