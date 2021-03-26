@@ -19,12 +19,18 @@ public class PlayerController {
     }
 
     @PostMapping("")
-    public Long getPlayers(@RequestBody Player player) {
+    public Long savePlayer(@RequestBody Player player) {
         return playerService.save(player);
     }
 
     @GetMapping("/{playerId}")
-    public Optional<Player> getPlayer(@PathVariable("playerId") long playerId) {
+    public Optional<Player> Player(@PathVariable("playerId") long playerId) {
         return playerService.find(playerId);
     }
+
+    @PutMapping("/{playerId}")
+    public Long updatePlayer(@RequestBody Player player) {
+        return playerService.save(player);
+    }
+
 }

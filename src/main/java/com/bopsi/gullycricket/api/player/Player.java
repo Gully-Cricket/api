@@ -2,6 +2,7 @@ package com.bopsi.gullycricket.api.player;
 
 import com.bopsi.gullycricket.api.common.Address;
 import com.bopsi.gullycricket.api.common.LeftOrRight;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -26,6 +27,7 @@ public class Player implements Serializable {
     private String lastName;
 
     @NotNull(message = "Date of birth name is mandatory")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date dateOfBirth;
 
     @OneToOne(cascade = CascadeType.ALL)
