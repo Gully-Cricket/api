@@ -14,7 +14,9 @@ public class PlayerController {
     private PlayerService playerService;
 
     @GetMapping("")
-    public Page<Player> getPlayers(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer perPage, @RequestParam(defaultValue = "id") String sortBy) {
+    public Page<Player> getPlayers(@RequestParam(defaultValue = "0") Integer page,
+                                   @RequestParam(defaultValue = "10") Integer perPage,
+                                   @RequestParam(defaultValue = "id") String sortBy) {
         return playerService.findAllPaginated(page, perPage, sortBy);
     }
 
@@ -29,7 +31,8 @@ public class PlayerController {
     }
 
     @PutMapping("/{playerId}")
-    public Long updatePlayer(@RequestBody Player player) {
+    public Long updatePlayer(@PathVariable("playerId") long playerId, @RequestBody Player player) {
+        player.setId(playerId);
         return playerService.save(player);
     }
 

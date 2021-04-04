@@ -14,7 +14,9 @@ public class VenueController {
     private VenueService venueService;
 
     @GetMapping("")
-    public Page<Venue> getVenues(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer perPage, @RequestParam(defaultValue = "id") String sortBy) {
+    public Page<Venue> getVenues(@RequestParam(defaultValue = "0") Integer page,
+                                 @RequestParam(defaultValue = "10") Integer perPage,
+                                 @RequestParam(defaultValue = "id") String sortBy) {
         return venueService.findAllPaginated(page, perPage, sortBy);
     }
 
@@ -29,7 +31,9 @@ public class VenueController {
     }
 
     @PutMapping("/{venueId}")
-    public Long updateVenue(@RequestBody Venue venue) {
+    public Long updateVenue(@PathVariable("venueId") long venueId,
+                            @RequestBody Venue venue) {
+        venue.setId(venueId);
         return venueService.save(venue);
     }
 }

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -14,7 +16,9 @@ public class TeamController {
     private TeamService teamService;
 
     @GetMapping("")
-    public Page<Team> getTeams(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer perPage, @RequestParam(defaultValue = "id") String sortBy) {
+    public Page<Team> getTeams(@RequestParam(defaultValue = "0") Integer page,
+                               @RequestParam(defaultValue = "10") Integer perPage,
+                               @RequestParam(defaultValue = "id") String sortBy) {
         return teamService.findAllPaginated(page, perPage, sortBy);
     }
 
@@ -29,7 +33,20 @@ public class TeamController {
     }
 
     @PutMapping("/{teamId}")
-    public Long updateTeam(@RequestBody Team team) {
+    public Long updateTeam(@PathVariable("teamId") long teamId,
+                           @RequestBody Team team) {
+        team.setId(teamId);
         return teamService.save(team);
+    }
+
+    @GetMapping("/{teamId}/squad")
+    public List<Member> createSquad(@PathVariable("teamId") long teamId) {
+        return new ArrayList<>();
+    }
+
+    @PostMapping("/{teamId}/squad")
+    public Long createSquad(@PathVariable("teamId") long teamId,
+                            @RequestBody List<Member> members) {
+        return null;
     }
 }
