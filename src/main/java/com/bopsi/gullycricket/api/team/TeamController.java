@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -40,13 +38,20 @@ public class TeamController {
     }
 
     @GetMapping("/{teamId}/squad")
-    public List<Member> createSquad(@PathVariable("teamId") long teamId) {
-        return new ArrayList<>();
+    public Iterable<Member> createSquad(@PathVariable("teamId") long teamId) {
+        return teamService.getCurrentSquad(teamId);
     }
 
-    @PostMapping("/{teamId}/squad")
-    public Long createSquad(@PathVariable("teamId") long teamId,
-                            @RequestBody List<Member> members) {
-        return null;
+    @PostMapping("/{teamId}/squad/add")
+    public Member createSquad(@PathVariable("teamId") long teamId,
+                              @RequestBody MemberDTO member) throws Exception {
+        return teamService.addToSquad(teamId, member);
     }
+
+    @DeleteMapping("/{teamId}/squad/remove")
+    public Member addToSquad(@PathVariable("teamId") long teamId,
+                             @RequestBody MemberDTO member) throws Exception {
+        return teamService.removeFromSquad(teamId, member);
+    }
+
 }

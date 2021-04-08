@@ -1,6 +1,7 @@
 package com.bopsi.gullycricket.api.team;
 
 import com.bopsi.gullycricket.api.player.Player;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -10,6 +11,22 @@ import java.util.Date;
 @Entity
 @Table
 public class Member implements Serializable {
+
+    Member() {
+    }
+
+    Member(long teamId, MemberDTO memberDTO) {
+        Team team = new Team();
+        team.setId(teamId);
+        Player player = new Player();
+        player.setId(memberDTO.getPlayerId());
+        this.id = memberDTO.getId();
+        this.team = team;
+        this.player = player;
+        this.startDate = memberDTO.getStartDate();
+        this.endDate = memberDTO.getEndDate();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,8 +38,10 @@ public class Member implements Serializable {
     @OneToOne
     private Player player;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
 
     public Long getId() {

@@ -20,6 +20,11 @@ public class PlayerController {
         return playerService.findAllPaginated(page, perPage, sortBy);
     }
 
+    @GetMapping("/search")
+    public Iterable<Player> getPlayers(@RequestParam String search) {
+        return playerService.searchPlayers(search, search);
+    }
+
     @PostMapping("")
     public Long savePlayer(@RequestBody Player player) {
         return playerService.save(player);
@@ -35,5 +40,6 @@ public class PlayerController {
         player.setId(playerId);
         return playerService.save(player);
     }
+
 
 }

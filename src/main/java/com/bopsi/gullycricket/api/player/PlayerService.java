@@ -18,6 +18,10 @@ public class PlayerService {
         return playerRepo.findAll(PageRequest.of(page, perPage, Sort.by(sortBy)));
     }
 
+    public Iterable<Player> searchPlayers(String firstName, String lastName) {
+        return playerRepo.findByFirstNameContainingOrLastNameContaining(firstName, lastName);
+    }
+
     public Long save(Player player){
         Player newPlayer = playerRepo.save(player);
         return newPlayer.getId();
