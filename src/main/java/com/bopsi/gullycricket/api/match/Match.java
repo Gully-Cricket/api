@@ -1,19 +1,26 @@
 package com.bopsi.gullycricket.api.match;
 
-import com.bopsi.gullycricket.api.common.Address;
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import com.bopsi.gullycricket.api.player.Player;
 import com.bopsi.gullycricket.api.team.Team;
 import com.bopsi.gullycricket.api.venue.Venue;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.List;
-
 @Entity
 @Table
 public class Match implements Serializable {
+	private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
